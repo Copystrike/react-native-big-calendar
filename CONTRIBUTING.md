@@ -26,7 +26,7 @@ yarn test
 
 - Fork it
 - Add your commit
-- Send PR to `master` branch
+- Send PR to `main` branch
 
 And then maintainer (currently only @acro5piano) will review your code. We might request changes, so please discuss with us.
 
