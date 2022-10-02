@@ -54,6 +54,8 @@ interface CalendarBodyProps<T extends ICalendarEventBase> {
   headerComponent?: React.ReactElement | null
   headerComponentStyle?: ViewStyle
   hourStyle?: TextStyle
+  startTime?: number
+  endTime?: number
 }
 
 function _CalendarBody<T extends ICalendarEventBase>({
@@ -76,6 +78,8 @@ function _CalendarBody<T extends ICalendarEventBase>({
   headerComponent = null,
   headerComponentStyle = {},
   hourStyle = {},
+  startTime = 0,
+  endTime = 23,
 }: CalendarBodyProps<T>) {
   const scrollView = React.useRef<ScrollView>(null)
   const { now } = useNow(!hideNowIndicator)
@@ -159,29 +163,33 @@ function _CalendarBody<T extends ICalendarEventBase>({
           {...(Platform.OS === 'web' ? panResponder.panHandlers : {})}
         >
           <View style={[u['z-20'], u['w-50']]}>
-            {hours.map((hour) => (
-              <HourGuideColumn
-                key={hour}
-                cellHeight={cellHeight}
-                hour={hour}
-                ampm={ampm}
-                hourStyle={hourStyle}
-              />
-            ))}
+            {hours
+              .filter((hour) => startTime <= hour && endTime >= hour)
+              .map((hour) => (
+                <HourGuideColumn
+                  key={hour}
+                  cellHeight={cellHeight}
+                  hour={hour}
+                  ampm={ampm}
+                  hourStyle={hourStyle}
+                />
+              ))}
           </View>
           {dateRange.map((date) => (
             <View style={[u['flex-1'], u['overflow-hidden']]} key={date.toString()}>
-              {hours.map((hour, index) => (
-                <HourGuideCell
-                  key={hour}
-                  cellHeight={cellHeight}
-                  date={date}
-                  hour={hour}
-                  onPress={_onPressCell}
-                  index={index}
-                  calendarCellStyle={calendarCellStyle}
-                />
-              ))}
+              {hours
+                .filter((hour) => startTime <= hour && endTime >= hour)
+                .map((hour, index) => (
+                  <HourGuideCell
+                    key={hour}
+                    cellHeight={cellHeight}
+                    date={date}
+                    hour={hour}
+                    onPress={_onPressCell}
+                    index={index}
+                    calendarCellStyle={calendarCellStyle}
+                  />
+                ))}
 
               {/* Render events of this date */}
               {/* M  T  (W)  T  F  S  S */}

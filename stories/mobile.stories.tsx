@@ -60,6 +60,11 @@ storiesOf('showcase - Mobile', module)
       </View>
     )
   })
+  .add('week mode start times', () => (
+    <View style={styles.mobile}>
+      <Calendar height={MOBILE_HEIGHT} events={events} startTime={8} endTime={22} />
+    </View>
+  ))
   .add('with app header', () => (
     <View style={styles.mobile}>
       <AppHeader />
