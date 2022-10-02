@@ -60,7 +60,7 @@ storiesOf('showcase - Mobile', module)
       </View>
     )
   })
-  .add('week mode start times', () => (
+  .add('week mode with time limits', () => (
     <View style={styles.mobile}>
       <Calendar height={MOBILE_HEIGHT} events={events} startTime={8} endTime={22} />
     </View>
